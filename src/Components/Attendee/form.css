@@ -18,3 +18,25 @@
   font-size: medium;
   border: solid 1px;
 }
+
+.btn-edit {
+  margin-right: 5px;
+  background-image: url(../img/edit.svg);
+  background-color: #0092e3;
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 6px;
+  width: 45px;
+  height: 25px;
+}
+.btn-delete {
+  background-image: url(../img/trash.svg);
+  background-color: red;
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  border-radius: 6px;
+  width: 45px;
+  height: 25px;
+}

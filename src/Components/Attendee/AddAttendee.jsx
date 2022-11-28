@@ -5,14 +5,14 @@ export const AddAttendee = () => {
     <div className="Container">
       <form>
         <div className="row">
-          <div class="col">
+          <div className="col">
             <input
-              typeName="text"
+              type="text"
               className="form-control"
               placeholder="First name"
             />
           </div>
-          <div class="col">
+          <div className="col">
             <input type="email" className="form-control" placeholder="Email" />
           </div>
           <div className="col">
