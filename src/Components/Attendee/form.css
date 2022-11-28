@@ -1,0 +1,20 @@
+.Container {
+  background-color: #70bbdb78;
+  border: #052939 solid 1px;
+  padding: 30px 33px;
+  border-radius: 25px;
+}
+.SubmitButton {
+  background-image: linear-gradient(
+    280deg,
+    #c6f2ff 0,
+    #93d8fc 8%,
+    #53bcf2 44%,
+    #00a0e8 75%,
+    #0086df 100%
+  );
+  padding: 5px 20px;
+  border-radius: 15px;
+  font-size: medium;
+  border: solid 1px;
+}
