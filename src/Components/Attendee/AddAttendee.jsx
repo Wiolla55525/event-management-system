@@ -2,7 +2,9 @@ import "./form.css";
 
 export const AddAttendee = () => {
   return (
-    <div className="Container">
+    <div className="Container my-4">
+      <h2 className="tableName py-3">Create Attendee</h2>
+
       <form>
         <div className="row">
           <div className="col">
