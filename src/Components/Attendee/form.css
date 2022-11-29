@@ -1,9 +1,22 @@
+.App {
+  text-align: center;
+  padding: 51px;
+}
+
 .Container {
-  background-color: #70bbdb78;
-  border: #052939 solid 1px;
-  padding: 30px 33px;
+  /* background-color: #70bbdb78; */
+  /* border: #052939 solid 1px; */
+  padding: 33px 33px;
   border-radius: 25px;
 }
+
+.Container-bigger {
+  background-color: #70bbdb78;
+  border: #052939 solid 1px;
+  padding: 20px 20px;
+  border-radius: 25px;
+}
+
 .SubmitButton {
   background-image: linear-gradient(
     280deg,
@@ -13,8 +26,8 @@
     #00a0e8 75%,
     #0086df 100%
   );
-  padding: 5px 20px;
-  border-radius: 15px;
+  padding: 13px 20px;
+  border-radius: 30px;
   font-size: medium;
   border: solid 1px;
 }
@@ -30,7 +43,8 @@
   width: 45px;
   height: 25px;
 }
-.btn-delete {
+
+.button-delete {
   background-image: url(../img/trash.svg);
   background-color: red;
   background-size: contain;
@@ -39,4 +53,8 @@
   border-radius: 6px;
   width: 45px;
   height: 25px;
+}
+
+.align {
+  text-align: center;
 }
