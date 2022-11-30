@@ -1,0 +1,23 @@
+[
+    {
+      "id": "1",
+      "firstName": "Kylian",
+      "email": "kyl@gmail.com",
+      "lastName": "Casemiro",
+      "age": "16"
+    },
+    {
+      "id": "2",
+      "firstName": "Jain",
+      "email": "jain@gmail.com",
+      "lastName": "Pogba",
+      "age": "17"
+    },
+    {
+      "id": "3",
+      "firstName": "Tony",
+      "email": "tony@gmail.com",
+      "lastName": "Ibrahim",
+      "age": "18"
+    }
+  ]

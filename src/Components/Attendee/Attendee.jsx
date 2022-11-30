@@ -4,18 +4,18 @@ import Container from "react-bootstrap/Container";
 import { useState, useEffect } from "react";
 
 export function Attendee() {
-  const [attendees, setAttendees] = useState(getSavedData());
+  // const [attendees, setAttendees] = useState(getSavedData());
   const [editState, setEdit] = useState({});
 
-  function getSavedData() {
-    const savedData = localStorage.getItem("Attendee");
-    const res = JSON.parse(savedData);
-    return res || [];
-  }
+  // function getSavedData() {
+  //   const savedData = localStorage.getItem("Attendee");
+  //   const res = JSON.parse(savedData);
+  //   return res || [];
+  // }
 
-  useEffect(() => {
-    localStorage.setItem("Attendee", JSON.stringify(attendees));
-  }, [attendees]);
+  // useEffect(() => {
+  //   localStorage.setItem("Attendee", JSON.stringify(attendees));
+  // }, [attendees]);
 
   function handleDeleteAttendee(id) {
     setAttendees(attendees.filter((attendee) => attendee.id !== id));
@@ -47,10 +47,41 @@ export function Attendee() {
     setAttendees(newState);
   }
 
-  const addAttendee = attendees.map((attendee) => (
-    <div key={attendee.id} className=" my-1 align">
+  const [attendees, setAttendees] = useState([]);
+
+
+
+  const getData=()=>{
+    fetch('data.json'
+    ,{
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+    }
+    )
+      .then(function(response){
+        console.log(response)
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(myJson);
+        setAttendees(myJson)
+      });
+  }
+  useEffect(()=>{
+    getData()
+  },[])
+
+  // {
+  //   data && data.length>0 && data.map((item)=><p>{item.id}</p>)
+  // }
+
+
+  const addAttendee = attendees.map((attendee, index) => (
+    <div key={index} className=" my-1 align">
       <Attendees
-        key={attendee.id}
+        key={index}
         updateAttendee={updateAttendee}
         changeValueOfState={editState}
         info={attendee}
@@ -59,6 +90,10 @@ export function Attendee() {
       />
     </div>
   ));
+
+
+
+
 
   return (
     <Container>
