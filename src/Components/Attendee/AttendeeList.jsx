@@ -1,3 +1,4 @@
+import { Modals } from "./Modal";
 
 export const Attendees = (props) => {
   return (
@@ -9,6 +10,12 @@ export const Attendees = (props) => {
           <td className="col">{props.info.lastName}</td>
           <td className="col">{props.info.age}</td>
           <td className="col">
+            <Modals
+              className="col"
+              updateAttendee={props.updateAttendee}
+              changeValueOfState={props.changeValueOfState}
+              onEdit={() => props.onEdit(props.info.id)}
+            />
             <button
               onClick={() => props.onDelete(props.info.id)}
               className="col button-delete "

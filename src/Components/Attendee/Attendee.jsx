@@ -4,13 +4,14 @@ import Container from "react-bootstrap/Container";
 import { useState, useEffect } from "react";
 
 export function Attendee() {
+  const [attendees, setAttendees] = useState(getSavedData());
+  const [editState, setEdit] = useState({});
+
   function getSavedData() {
     const savedData = localStorage.getItem("Attendee");
     const res = JSON.parse(savedData);
     return res || [];
   }
-
-  const [attendees, setAttendees] = useState(getSavedData());
 
   useEffect(() => {
     localStorage.setItem("Attendee", JSON.stringify(attendees));
@@ -30,14 +31,31 @@ export function Attendee() {
     ]);
   }
 
+  function handleEditAttendee(id) {
+    setEdit(attendees.filter((attendee) => attendee.id === id)[0]);
+  }
+  function updateAttendee(changeInfo, id) {
+    const newIndex = attendees.findIndex(
+      (attendee) => attendee.id === changeInfo.id
+    );
+    const newState = [...attendees];
+    newState[newIndex] = {
+      ...changeInfo,
+      id,
+    };
 
+    setAttendees(newState);
+  }
 
   const addAttendee = attendees.map((attendee) => (
     <div key={attendee.id} className=" my-1 align">
       <Attendees
         key={attendee.id}
+        updateAttendee={updateAttendee}
+        changeValueOfState={editState}
         info={attendee}
         onDelete={handleDeleteAttendee}
+        onEdit={handleEditAttendee}
       />
     </div>
   ));
