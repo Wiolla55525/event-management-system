@@ -34,14 +34,15 @@ export function Attendee() {
   function handleEditAttendee(id) {
     setEdit(attendees.filter((attendee) => attendee.id === id)[0]);
   }
+
   function updateAttendee(changeInfo, id) {
     const newIndex = attendees.findIndex(
       (attendee) => attendee.id === changeInfo.id
     );
-    const newState = [...attendees];
+    const newState = 
+    [...attendees];
     newState[newIndex] = {
-      ...changeInfo,
-      id,
+      ...changeInfo
     };
 
     setAttendees(newState);
@@ -67,21 +68,51 @@ export function Attendee() {
       .then(function(myJson) {
         console.log(myJson);
         setAttendees(myJson)
-      });
+      })
+      .catch((err) => {
+        console.log(err.message);
+     });
   }
+
   useEffect(()=>{
     getData()
   },[])
 
-  // {
-  //   data && data.length>0 && data.map((item)=><p>{item.id}</p>)
-  // }
 
+  const [firstName, setfirstName] = useState('');
+  const [email, setEmail] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [age, setAge] = useState('');
+  const addPosts = async (firstName, email, lastName, age) => {
+    await fetch('data.json', {
+    method: 'POST',
+    body: JSON.stringify({
+      firstName: firstName,
+      email: email,
+      lastName: lastName,
+      age: age,
+       id: Math.random().toString(36).slice(2),
+    }),
+    headers: {
+       'Content-type': 'application/json; charset=UTF-8',
+    },
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setAttendees((attendees) => [data, ...attendees]);
+       setfirstName('');
+       setEmail('');
+       setLastName('');
+       setAge('');
+    })
+    .catch((err) => {
+       console.log(err.message);
+    });
+    };
 
   const addAttendee = attendees.map((attendee, index) => (
     <div key={index} className=" my-1 align">
       <Attendees
-        key={index}
         updateAttendee={updateAttendee}
         changeValueOfState={editState}
         info={attendee}

@@ -4,7 +4,7 @@ export const Attendees = (props) => {
   return (
     <table className="table">
       <tbody className="">
-        <tr className="row">
+        <tr className="row" key={props.info.id}>
           <td className="col">{props.info.id}</td>
           <td className="col">{props.info.firstName}</td>
           <td className="col">{props.info.email}</td>
