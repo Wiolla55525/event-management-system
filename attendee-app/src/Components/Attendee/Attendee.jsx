@@ -49,21 +49,33 @@ export function Attendee() {
     // ]);
   }
 
-  function handleEditAttendee(id) {
+
+
+   function handleEditAttendee(id) {
     setEdit(attendees.filter((attendee) => attendee.id === id)[0]);
   }
 
-  function updateAttendee(changeInfo, id) {
-    const newIndex = attendees.findIndex(
-      (attendee) => attendee.id === changeInfo.id
-    );
-    const newState = [...attendees];
-    newState[newIndex] = {
-      ...changeInfo,
-    };
+  async function updateAttendee(attendee) {
+    const response = await api.put(`contacts/${attendee.id}`, attendee)
+     const {id} = response.data;
 
-    setAttendees(newState);
-  }
+     setAttendees(
+      attendees.map((attendee) => {
+        return attendee.id === id ? { ...response.data} :attendee;
+      })
+     );
+    };
+    // const newIndex = attendees.findIndex(
+    //   (attendee) => attendee.id === changeInfo.id
+    // );
+
+    // const newState = [...attendees];
+    // newState[newIndex] = {
+    //   ...changeInfo,
+    // };
+
+    // setAttendees(newState);
+  
 
 
   const retrieveAttendees = async () => {
