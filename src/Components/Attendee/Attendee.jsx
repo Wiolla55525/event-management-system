@@ -2,6 +2,7 @@ import { Attendees } from "./AttendeeList";
 import { AddAttendeeForm } from "./AddAttendee";
 import Container from "react-bootstrap/Container";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export function Attendee() {
   // const [attendees, setAttendees] = useState(getSavedData());
@@ -16,11 +17,11 @@ export function Attendee() {
   // useEffect(() => {
   //   localStorage.setItem("Attendee", JSON.stringify(attendees));
   // }, [attendees]);
-
+  
+  
   function handleDeleteAttendee(id) {
     setAttendees(attendees.filter((attendee) => attendee.id !== id));
   }
-
   function handleAddAttendee(data, id) {
     setAttendees([
       ...attendees,
@@ -39,10 +40,9 @@ export function Attendee() {
     const newIndex = attendees.findIndex(
       (attendee) => attendee.id === changeInfo.id
     );
-    const newState = 
-    [...attendees];
+    const newState = [...attendees];
     newState[newIndex] = {
-      ...changeInfo
+      ...changeInfo,
     };
 
     setAttendees(newState);
@@ -50,81 +50,43 @@ export function Attendee() {
 
   const [attendees, setAttendees] = useState([]);
 
+  // const getData = () => {
+  //   fetch("http://localhost:3000/data.json", {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //   })
+  //     .then(function (response) {
+  //       console.log(response);
+  //       return response.json();
+  //     })
+  //     .then(function (myJson) {
+  //       console.log(myJson);
+  //       setAttendees(myJson);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
 
-  const getData=()=>{
-    fetch('data.json'
-    ,{
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
-    }
-    )
-      .then(function(response){
-        console.log(response)
-        return response.json();
-      })
-      .then(function(myJson) {
-        console.log(myJson);
-        setAttendees(myJson)
-      })
-      .catch((err) => {
-        console.log(err.message);
-     });
-  }
-
-  useEffect(()=>{
-    getData()
-  },[])
-
-
-  const [firstName, setfirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [age, setAge] = useState('');
-  const addPosts = async (firstName, email, lastName, age) => {
-    await fetch('data.json', {
-    method: 'POST',
-    body: JSON.stringify({
-      firstName: firstName,
-      email: email,
-      lastName: lastName,
-      age: age,
-       id: Math.random().toString(36).slice(2),
-    }),
-    headers: {
-       'Content-type': 'application/json; charset=UTF-8',
-    },
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      setAttendees((attendees) => [data, ...attendees]);
-       setfirstName('');
-       setEmail('');
-       setLastName('');
-       setAge('');
-    })
-    .catch((err) => {
-       console.log(err.message);
-    });
-    };
-
-  const addAttendee = attendees.map((attendee, index) => (
-    <div key={index} className=" my-1 align">
-      <Attendees
-        updateAttendee={updateAttendee}
-        changeValueOfState={editState}
-        info={attendee}
-        onDelete={handleDeleteAttendee}
-        onEdit={handleEditAttendee}
-      />
-    </div>
-  ));
-
-
-
-
+const addAttendee = attendees.map((attendee, index) => (
+  <div key={index} className=" my-1 align">
+    <Attendees
+      updateAttendee={updateAttendee}
+      changeValueOfState={editState}
+      info={attendee}
+      onDelete={handleDeleteAttendee}
+      onEdit={handleEditAttendee}
+     
+    />
+  </div>
+));
 
   return (
     <Container>
@@ -147,7 +109,7 @@ export function Attendee() {
       <div className=" row d-flex justify-content-center">
         <h2 className="tableName py-4">Attendee list:</h2>
         {attendees.length > 0 ? (
-          addAttendee
+          addAttendee 
         ) : (
           <div className="text-center">No attendees found</div>
         )}
