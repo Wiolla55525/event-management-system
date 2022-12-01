@@ -21,9 +21,13 @@ export function Attendee() {
   //   localStorage.setItem("Attendee", JSON.stringify(attendees));
   // }, [attendees]);
 
-  function handleDeleteAttendee(id) {
+  async function handleDeleteAttendee(id) {
+    await api.delete(`/contacts/${id}`)
     setAttendees(attendees.filter((attendee) => attendee.id !== id));
   }
+
+
+
   async function handleAddAttendee(data, id) {
     console.log(data)
 
@@ -31,7 +35,9 @@ export function Attendee() {
       id: new Date().getTime(),
       ...data
     }
+
     const response = await api.post("/contacts", request)
+    console.log(response)
     setAttendees([...attendees, response.data])
 
     // setAttendees([
