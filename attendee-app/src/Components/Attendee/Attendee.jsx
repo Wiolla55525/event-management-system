@@ -3,6 +3,7 @@ import { AddAttendeeForm } from "./AddAttendee";
 import Container from "react-bootstrap/Container";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import api from "../api/contacts"
 
 export function Attendee() {
   // const [attendees, setAttendees] = useState(getSavedData());
@@ -49,6 +50,19 @@ export function Attendee() {
   }
 
   const [attendees, setAttendees] = useState([]);
+
+  const retrieveAttendees = async () => {
+    const response = await api.get("/contacts")
+    return response.data;
+  }
+
+  useEffect(() => {
+const getAll = async() => {
+  const allAttendees = await retrieveAttendees();
+  if (allAttendees )setAttendees(allAttendees);
+}
+getAll();
+  }, [])
 
   // const getData = () => {
   //   fetch("http://localhost:3000/data.json", {
