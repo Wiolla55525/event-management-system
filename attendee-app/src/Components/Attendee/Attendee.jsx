@@ -11,7 +11,7 @@ export function Attendee() {
 
   useEffect(() => {
     axios.get("/users").then((res) => {
-      console.log(res.data);
+      // console.log(res);
       setAttendees(res.data);
     });
   }, []);
@@ -27,7 +27,7 @@ export function Attendee() {
   // }, [attendees]);
 
   async function handleDeleteAttendee(id) {
-    await axios.delete(`/api/contacts/${id}`);
+    axios.delete(`/users/${id}`);
     setAttendees(attendees.filter((attendee) => attendee.id !== id));
   }
 
@@ -35,7 +35,6 @@ export function Attendee() {
     console.log(data);
 
     const request = {
-      id: new Date().getTime(),
       ...data,
     };
 
@@ -57,14 +56,19 @@ export function Attendee() {
   }
 
   async function updateAttendee(attendee) {
-    const response = await axios.put(`/users/${attendee.id}`, attendee);
-    const { id } = response.data;
-
-    setAttendees(
-      attendees.map((attendee) => {
-        return attendee.id === id ? { ...response.data } : attendee;
+    axios.put(`/users/${attendee.id}`, attendee);
+    // const { id } = response.data;
+      const editedUsers = attendees.map((item) => {
+      //   return item.id === attendee.id ? { ...response.data } : attendee;
+      // })
+        if (item.id === attendee.id) {
+          console.log({...attendee})
+          return {...attendee}
+        }
+        return item
       })
-    );
+      console.log(editedUsers)
+      setAttendees(editedUsers)
   }
   // const newIndex = attendees.findIndex(
   //   (attendee) => attendee.id === changeInfo.id
