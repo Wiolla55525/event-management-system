@@ -3,13 +3,18 @@ import { AddAttendeeForm } from "./AddAttendee";
 import Container from "react-bootstrap/Container";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import api from "../api/contacts";
 
 export function Attendee() {
   // const [attendees, setAttendees] = useState(getSavedData());
   const [editState, setEdit] = useState({});
   const [attendees, setAttendees] = useState([]);
 
+  useEffect(() => {
+    axios.get("/users").then((res) => {
+      console.log(res.data);
+      setAttendees(res.data);
+    });
+  }, []);
 
   // function getSavedData() {
   //   const savedData = localStorage.getItem("Attendee");
@@ -22,23 +27,21 @@ export function Attendee() {
   // }, [attendees]);
 
   async function handleDeleteAttendee(id) {
-    await api.delete(`/contacts/${id}`)
+    await axios.delete(`/api/contacts/${id}`);
     setAttendees(attendees.filter((attendee) => attendee.id !== id));
   }
 
-
-
   async function handleAddAttendee(data, id) {
-    console.log(data)
+    console.log(data);
 
     const request = {
       id: new Date().getTime(),
-      ...data
-    }
+      ...data,
+    };
 
-    const response = await api.post("/contacts", request)
-    console.log(response)
-    setAttendees([...attendees, response.data])
+    const response = await axios.post(`/users`, request);
+    console.log(response);
+    setAttendees([...attendees, response.data]);
 
     // setAttendees([
     //   ...attendees,
@@ -49,49 +52,30 @@ export function Attendee() {
     // ]);
   }
 
-
-
-   function handleEditAttendee(id) {
+  function handleEditAttendee(id) {
     setEdit(attendees.filter((attendee) => attendee.id === id)[0]);
   }
 
   async function updateAttendee(attendee) {
-    const response = await api.put(`contacts/${attendee.id}`, attendee)
-     const {id} = response.data;
+    const response = await axios.put(`/users/${attendee.id}`, attendee);
+    const { id } = response.data;
 
-     setAttendees(
+    setAttendees(
       attendees.map((attendee) => {
-        return attendee.id === id ? { ...response.data} :attendee;
+        return attendee.id === id ? { ...response.data } : attendee;
       })
-     );
-    };
-    // const newIndex = attendees.findIndex(
-    //   (attendee) => attendee.id === changeInfo.id
-    // );
+    );
+  }
+  // const newIndex = attendees.findIndex(
+  //   (attendee) => attendee.id === changeInfo.id
+  // );
 
-    // const newState = [...attendees];
-    // newState[newIndex] = {
-    //   ...changeInfo,
-    // };
+  // const newState = [...attendees];
+  // newState[newIndex] = {
+  //   ...changeInfo,
+  // };
 
-    // setAttendees(newState);
-  
-
-
-  const retrieveAttendees = async () => {
-    const response = await api.get("/contacts");
-    return response.data;
-  };
-
-  useEffect(() => {
-    const getAll = async () => {
-      const allAttendees = await retrieveAttendees();
-      if (allAttendees) setAttendees(allAttendees);
-    };
-    getAll();
-  }, []);
-
-
+  // setAttendees(newState);
 
   const addAttendee = attendees.map((attendee, index) => (
     <div key={index} className=" my-1 align">
