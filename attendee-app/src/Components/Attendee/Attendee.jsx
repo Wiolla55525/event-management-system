@@ -5,35 +5,32 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Heading } from "../Heading/Heading";
 import { Dashboard } from "../Dashboard/Dashboard";
-import {  } from "sqlite3";
+// import {  } from "sqlite3";
 
-
-const db = ({
-  name: "users",
-});
-
+// const db = ({
+//   name: "users",
+// });
 
 export function Attendee() {
-  // const [attendees, setAttendees] = useState(getSavedData());
-  const [editState, setEdit] = useState({});
-  const [attendees, setAttendees] = useState([]);
-
-  useEffect(() => {
-    axios.get("/users").then((res) => {
-      // console.log(res);
-      setAttendees(res.data);
-    });
-  }, []);
-
   // function getSavedData() {
   //   const savedData = localStorage.getItem("Attendee");
   //   const res = JSON.parse(savedData);
   //   return res || [];
   // }
+  // const [attendees, setAttendees] = useState(getSavedData());
 
   // useEffect(() => {
   //   localStorage.setItem("Attendee", JSON.stringify(attendees));
   // }, [attendees]);
+
+  const [editState, setEdit] = useState({});
+  const [attendees, setAttendees] = useState([]);
+
+  useEffect(() => {
+    axios.get("/users").then((res) => {
+      setAttendees(res.data);
+    });
+  }, []);
 
   async function handleDeleteAttendee(id) {
     axios.delete(`/users/${id}`);
@@ -41,23 +38,12 @@ export function Attendee() {
   }
 
   async function handleAddAttendee(data, id) {
-    console.log(data);
-
     const request = {
       ...data,
     };
 
-    const response = await axios.post(`/users`, request);
-    console.log(response);
-    setAttendees([...attendees, response.data]);
-
-    // setAttendees([
-    //   ...attendees,
-    //   {
-    //     ...data,
-    //     id: new Date().getTime(),
-    //   },
-    // ]);
+    await axios.post(`/users`, request);
+    setAttendees([...attendees, data]);
   }
 
   function handleEditAttendee(id) {
@@ -65,30 +51,15 @@ export function Attendee() {
   }
 
   async function updateAttendee(attendee) {
-    axios.put(`/users/${attendee.id}`, attendee);
-    // const { id } = response.data;
+    axios.patch(`/users/`, attendee);
     const editedUsers = attendees.map((item) => {
-      //   return item.id === attendee.id ? { ...response.data } : attendee;
-      // })
       if (item.id === attendee.id) {
-        console.log({ ...attendee });
         return { ...attendee };
       }
       return item;
     });
-    console.log(editedUsers);
     setAttendees(editedUsers);
   }
-  // const newIndex = attendees.findIndex(
-  //   (attendee) => attendee.id === changeInfo.id
-  // );
-
-  // const newState = [...attendees];
-  // newState[newIndex] = {
-  //   ...changeInfo,
-  // };
-
-  // setAttendees(newState);
 
   const addAttendee = attendees.map((attendee, index) => (
     <div key={index} className=" my-1 align">

@@ -2,7 +2,7 @@
   "name": "server-api",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "dbServer.js",
   "scripts": {
     "start": "node dbServer.js "
   },
