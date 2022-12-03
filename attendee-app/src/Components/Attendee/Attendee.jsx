@@ -5,6 +5,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Heading } from "../Heading/Heading";
 import { Dashboard } from "../Dashboard/Dashboard";
+import {  } from "sqlite3";
+
+
+const db = ({
+  name: "users",
+});
+
 
 export function Attendee() {
   // const [attendees, setAttendees] = useState(getSavedData());
