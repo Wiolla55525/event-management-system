@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import { AddAttendeeForm } from "./AddAttendee";
+import "./form.css";
 
 export function Modals(props) {
   const [show, setShow] = useState(false);
@@ -15,9 +17,12 @@ export function Modals(props) {
     <>
       <Modal show={show} onHide={handleClose}>
         <div className="modal-body">
-          <h3 className="">Change some information</h3>
+          <Modal.Header closeButton>
+            <Modal.Title>Change some information: </Modal.Title>
+          </Modal.Header>
           <AddAttendeeForm
             prop="Save"
+            onClose={handleClose}
             handleAddAttendee={props.updateAttendee}
             changeValueOfState={props.changeValueOfState}
           />

@@ -20,10 +20,10 @@ app.post('/users', (req, res) => {
     const jsonData = JSON.parse(data);
 
     const newAtendee = {
-        id: jsonData.length.toString(),
+        id: (Date.now() + Math.random()).toString(36),
         firstName: req.body.firstName,
-        email: req.body.email,
         lastName: req.body.lastName,
+        email: req.body.email,
         age: req.body.age,
     };
 
@@ -57,12 +57,12 @@ app.put('/users/:id', (req, res) =>{
     if (editedUser.firstName) {
         user.firstName = editedUser.firstName;
       }
-      if (editedUser.email) {
-        user.email = editedUser.email;
-      }
       if (editedUser.lastName) {
-        user.lastName = editedUser.lastName;
-      }
+          user.lastName = editedUser.lastName;
+        }
+        if (editedUser.email) {
+          user.email = editedUser.email;
+        }
       if (editedUser.age) {
         user.age = editedUser.age;
       }

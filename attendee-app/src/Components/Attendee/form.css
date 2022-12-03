@@ -6,8 +6,12 @@
 .Container {
   /* background-color: #70bbdb78; */
   /* border: #052939 solid 1px; */
-  padding: 33px 33px;
+  /* padding: 33px 33px; */
   border-radius: 25px;
+}
+.modal-body {
+  background-color: #168add8a;
+  padding: 0;
 }
 
 .Container-bigger {
@@ -33,7 +37,7 @@
 }
 
 .btn-edit {
-  margin-right: 5px;
+  margin-right: 1px;
   background-image: url(../img/edit.svg);
   background-color: #0092e3;
   background-position: right;
@@ -45,6 +49,7 @@
 }
 
 .button-delete {
+  margin-left: 1px;
   background-image: url(../img/trash.svg);
   background-color: red;
   background-size: contain;

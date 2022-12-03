@@ -3,6 +3,8 @@ import { AddAttendeeForm } from "./AddAttendee";
 import Container from "react-bootstrap/Container";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Heading } from "../Heading/Heading";
+import { Dashboard } from "../Dashboard/Dashboard";
 
 export function Attendee() {
   // const [attendees, setAttendees] = useState(getSavedData());
@@ -58,17 +60,17 @@ export function Attendee() {
   async function updateAttendee(attendee) {
     axios.put(`/users/${attendee.id}`, attendee);
     // const { id } = response.data;
-      const editedUsers = attendees.map((item) => {
+    const editedUsers = attendees.map((item) => {
       //   return item.id === attendee.id ? { ...response.data } : attendee;
       // })
-        if (item.id === attendee.id) {
-          console.log({...attendee})
-          return {...attendee}
-        }
-        return item
-      })
-      console.log(editedUsers)
-      setAttendees(editedUsers)
+      if (item.id === attendee.id) {
+        console.log({ ...attendee });
+        return { ...attendee };
+      }
+      return item;
+    });
+    console.log(editedUsers);
+    setAttendees(editedUsers);
   }
   // const newIndex = attendees.findIndex(
   //   (attendee) => attendee.id === changeInfo.id
@@ -95,15 +97,13 @@ export function Attendee() {
 
   return (
     <Container>
-      <div className="pt-5 pb-2 text-center">
-        <h1 className="">
-          MANAGEMENT <br /> DASHBOARD
-        </h1>
-      </div>
+      <Dashboard />
 
       <div className=" row d-flex justify-content-center">
-        <div className="mb-5 col Container-bigger">
-          <h2 className="">Create Attendee</h2>
+        <div className="p-5 mb-5 mt-4 col Container-bigger">
+          <h2 className="pb-3 text-sm-center text-md-start ">
+            Create Attendee
+          </h2>
           <AddAttendeeForm
             prop="Submit"
             handleAddAttendee={(value, id) => handleAddAttendee(value, id)}
@@ -114,7 +114,10 @@ export function Attendee() {
       <div className=" row d-flex justify-content-center">
         <h2 className="tableName py-4">Attendee list:</h2>
         {attendees.length > 0 ? (
-          addAttendee
+          <>
+            <Heading />
+            <>{addAttendee}</>
+          </>
         ) : (
           <div className="text-center">No attendees found</div>
         )}

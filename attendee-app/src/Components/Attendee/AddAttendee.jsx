@@ -4,7 +4,7 @@ import "./form.css";
 export const AddAttendeeForm = (props) => {
   const initialValueState = props.changeValueOfState
     ? props.changeValueOfState
-    : { firstName: "", email: "", lastName: "", age: "" };
+    : { firstName: "", lastName: "", email: "", age: "" };
 
   const [value, setForm] = useState({ ...initialValueState });
 
@@ -15,36 +15,26 @@ export const AddAttendeeForm = (props) => {
   function onSubmit(e) {
     e.preventDefault();
     props.handleAddAttendee(value);
+    props.onClose && props.onClose();
     setForm({ ...initialValueState });
   }
 
   return (
-    <div className="Container my-4">
+    <div className="Container mt-4 ">
       <form onSubmit={onSubmit}>
-        <div className="row align-items-center">
-          <div className="col">
+        <div className="row justify-content-center gap-3 gap-md-0 ">
+          <div className="col-sm-8 col-md-3 ">
             <input
               className="form-control "
               type="text"
               id="firstName"
               value={value.firstName}
               onChange={formChangeHandler}
-              placeholder="Friends name"
+              placeholder="First name"
               required
             />
           </div>
-          <div className="col">
-            <input
-              className="form-control "
-              type="text"
-              id="email"
-              onChange={formChangeHandler}
-              value={value.email}
-              required
-              placeholder="E-mail"
-            />
-          </div>
-          <div className="col">
+          <div className="col-sm-8 col-md-3 ">
             <input
               className="form-control "
               type="text"
@@ -55,7 +45,18 @@ export const AddAttendeeForm = (props) => {
               placeholder="Last Name"
             />
           </div>
-          <div className="col">
+          <div className="col-sm-8 col-md-3">
+            <input
+              className="form-control "
+              type="email"
+              id="email"
+              onChange={formChangeHandler}
+              value={value.email}
+              required
+              placeholder="E-mail"
+            />
+          </div>
+          <div className="col-sm-8 col-md-3">
             <input
               className="form-control "
               id="age"
@@ -66,7 +67,7 @@ export const AddAttendeeForm = (props) => {
               placeholder="Age"
             />
           </div>
-          <div className="col">
+          <div className="row-4 text-center pt-md-4">
             <button type="submit" value="Submit" className=" SubmitButton">
               {props.prop}
             </button>
