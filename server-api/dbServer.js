@@ -5,6 +5,7 @@ const PORT = process.env.PORT;
 const app = express();
 const fs = require("fs");
 const db = require("./db.js");
+const loginDb = require("./loginDb.js");
 
 app.use(express.json());
 app.use(cors());
@@ -19,6 +20,29 @@ app.get("/users", (req, res, next) => {
     }
     res.json(rows);
   });
+});
+
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  loginDb.all(
+    `SELECT * FROM login WHERE email = ? and password = ?`,
+    [email, password],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      }
+      if (result.length > 0) {
+        console.log(result);
+
+        res.send(result);
+      } else {
+        res.send({ message: "Invalid username/password" });
+      }
+    }
+  );
 });
 
 app.post("/users", (req, res, next) => {

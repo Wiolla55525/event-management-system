@@ -1,29 +1,31 @@
 import "./login.css";
 import { useState } from "react";
 import { useForm } from "../Hooks/useForm";
+import axios from "axios";
 
-export function Login({ handleChange, values, errors, handleSubmit, 
-    isSubmitting}) {
+export function Login(
+    // { handleChange, values, errors, handleSubmit, 
+    // isSubmitting}
+    ) {
+        const [email, setEmail] = useState("");
+        const [password, setPassword] = useState ("");
+        const [loginStatus, setLoginStatus] = useState("");
 
-    const [details, setDetails ] = useState({email : "", password: ""})
-    const [user, setUser] = useState({email: "", password: ""});
+const onChange = (e) => {
+    e.preventDefault()
+    axios.post('/login', { email: email, password: password })
+    .then(( res )=> {
+        if(res.data.message) {
+            console.log('sth wrong')
+            setLoginStatus(res.data.message);
+        } else {
+            console.log('all good')
+            setLoginStatus (res.data.email);
+        }
+//  console.log(res.data)
+    })
+}
 
-    const adminUser = {
-      email: "admin@user.com",
-      password: "adminadmin"
-    }
-
-    const Loginn = details => {
-        console.log(details)
-        if (details.email === adminUser.email && details.password === adminUser.password){
-    console.log('Logged in')  
-    setUser({
-        email: details.email,
-
-    });
-    } else {
-        console.log('details not match')}
-    }
     
     
 //       const Logout = () => {
@@ -31,15 +33,15 @@ export function Login({ handleChange, values, errors, handleSubmit,
 //         setUser({email: ''})
 //       }
       
-    const formLogin = (e) => {
+//     const formLogin = (e) => {
 
-    // console.log("Callback function when form is submitted!");
-    // console.log("Form Values ", values);
-    e.preventDefault();
-    Loginn(details)
-  };
+//     // console.log("Callback function when form is submitted!");
+//     // console.log("Form Values ", values);
+//     e.preventDefault();
+//     Loginn(details)
+//   };
 
-  console.log(values);
+//   console.log(values);
 
   return (
     <div className="wrapper">
@@ -65,60 +67,77 @@ export function Login({ handleChange, values, errors, handleSubmit,
                       <div className="center-wrap">
                         <div className="section text-center">
                           <h4 className="mb-4 pb-3">Log In</h4>
-                          <form onSubmit={formLogin}>
+                          <form onSubmit={onChange}>
                             <div className="form-group">
                               <input
-                              value={details.email}
+                            //   value={details.email}
                                 type="email"
                                 name="email"
                                 className="form-style"
                                 placeholder="Email"
                                 id="logemail"
                                 onChange={
-                                    e => setDetails({
-                                        ...details, email: e.target.value
-                                    })
-                                }
+                                    (e) => setEmail(e.target.value
+                                    )}
+
+                                // }
+                                // rules={[
+                                //     {
+                                //         required: true,
+                                //         message: "Please enter a valid email address"
+                                //     }
+                                // ]}
                               />
                               <i className="input-icon uil uil-at"></i>
                             </div>
                             <div className="form-group mt-2">
                               <input
-                              value={details.password}
+                            //   value={details.password}
                                 type="password"
                                 name="password"
                                 className="form-style"
                                 placeholder="Password"
                                 id="password"
-                                onChange={  e => setDetails({
-                                    ...details, password: e.target.value
-                                })}
+                                onChange = { (e) => {
+                                    setPassword (e.target.value);
+                                 }}
                                 minLength="5"
+                                // rules={[
+                                //     {
+                                //         required: true,
+                                //         message: "Please enter your password"
+                                //     }
+                                // ]}
                               />
                               <i className="input-icon uil uil-lock-alt"></i>
                             </div>
-                            <div>
-                              {!isSubmitting && (
+                            {/* <div> */}
+                              {/* {!isSubmitting && ( */}
                                 <button
                                   type="submit"
                                   value="Submit"
                                   className="btn mt-4"
+                                  onClick={onChange}
+
                                   //   onSubmit={handleSubmit}
                                 >
                                   SUBMIT
                                 </button>
-                              )}{" "}
-                              {isSubmitting && (
-                                <div className="d-flex justify-content-center my-3">
-                                  <div
-                                    className="spinner-border text-secondary "
-                                    role="status"
-                                  >
-                                    <span className="sr-only"></span>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
+                                <h5 className="pt-2"> {loginStatus}</h5>
+
+                          {/* )}{" "} */}
+
+                            {/* {isSubmitting && ( */}
+                            {/* //     <div className="d-flex justify-content-center my-3">
+                            //       <div */}
+                            {/* //         className="spinner-border text-secondary "
+                            //         role="status"
+                            //       >
+                            //         <span className="sr-only"></span>
+                            //       </div>
+                            //     </div>
+                            //   )}
+                            // </div> */}
                           </form>
 
                           <p className="mb-0 mt-4 text-center">
@@ -133,7 +152,7 @@ export function Login({ handleChange, values, errors, handleSubmit,
                       <div className="center-wrap">
                         <div className="section text-center">
                           <h4 className="mb-4 pb-3">Sign Up</h4>
-                          <form onSubmit={handleSubmit}>
+                          <form >
                             <div className="form-group">
                               <input
                                 type="text"
@@ -141,7 +160,7 @@ export function Login({ handleChange, values, errors, handleSubmit,
                                 className="form-style"
                                 placeholder="Full Name"
                                 id="logname"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                                 minLength="5"
                               />
                               <i className="input-icon uil uil-user"></i>
@@ -153,7 +172,7 @@ export function Login({ handleChange, values, errors, handleSubmit,
                                 className="form-style"
                                 placeholder="Email"
                                 id="loginemail"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                               />
                               <i className="input-icon uil uil-at"></i>
                             </div>
@@ -164,12 +183,13 @@ export function Login({ handleChange, values, errors, handleSubmit,
                                 className="form-style"
                                 placeholder="Password"
                                 id="loginpassword"
-                                onChange={handleChange}
+                                // onChange={handleChange}
                                 minLength="5"
                               />
                               <i className="input-icon uil uil-lock-alt"></i>
                             </div>
                             <button
+                            // onClick={login}
                               type="submit"
                               value="Submit"
                               className="btn mt-4"
