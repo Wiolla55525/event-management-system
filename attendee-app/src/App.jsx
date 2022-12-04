@@ -9,10 +9,10 @@ import {
 
 function App() {
   return (
-    <div>
+    <div className="bgUsers">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/users" element={<Attendee />} />
+        <Route path="/users" element={<Attendee/>} />
       </Routes>
     </div>
   );

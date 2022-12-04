@@ -224,3 +224,11 @@ h6 span {
   text-align: left;
   color: #ffeba7;
 }
+
+.sticky {
+  position: absolute !important;
+  top: 33px;
+  right: auto;
+  left: auto;
+  width: 550px !important;
+}

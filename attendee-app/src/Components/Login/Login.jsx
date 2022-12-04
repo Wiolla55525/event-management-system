@@ -2,12 +2,13 @@ import "./login.css";
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AdditionalContentExample, Spinner } from "./Alert"
+import { AdditionalContentExample } from "./Alert";
 
-export function Login() {
+export function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
+
   const navigate = useNavigate();
 
   const Login = (e) => {
@@ -97,12 +98,7 @@ export function Login() {
                             >
                               SUBMIT
                             </button>
-                            <h5 className="pt-2"> 
-                            {loginStatus}
-                            
-                            </h5>
-                            {/* <Spinner/> */}
-
+                            <h5 className="pt-2">{loginStatus}</h5>
                           </form>
 
                           <p className="mb-0 mt-4 text-center">
@@ -165,18 +161,7 @@ export function Login() {
                 </div>
               </div>
             </div>
-            <button
-              className="btn mb-5"
-              onClick={() =>
-                alert(
-                  "TRY TO ENTER: admin@admin.com (Email) && admin123 (password)"
-                )
-              }
-            
-              Check demo version
-            // (<AdditionalContentExample/>)}
-            >
-            </button>
+            <AdditionalContentExample />
           </div>
         </div>
       </div>
