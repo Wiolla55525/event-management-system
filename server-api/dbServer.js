@@ -42,12 +42,9 @@ app.post("/login", (req, res) => {
     [email, password],
     (err, result) => {
       if (err) {
-        console.log(err);
         res.send(err);
       }
       if (result.length > 0) {
-        console.log(result);
-
         res.send(result);
       } else {
         res.send({ message: "Invalid username/password" });
@@ -100,7 +97,6 @@ app.patch("/users/", (req, res, next) => {
     function (err, result) {
       if (err) {
         res.status(400).json({ error: res.message });
-        console.log(err);
         return;
       }
       console.log(result);

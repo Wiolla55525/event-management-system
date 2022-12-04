@@ -13,25 +13,19 @@ export function Login(props) {
 
   const Login = (e) => {
     e.preventDefault();
-    console.log("I am in Login const");
     Axios.post("/login", { email: email, password: password }).then(
       (response) => {
         if (response.data.message) {
-          console.log("sth wrong");
           setLoginStatus(response.data.message);
         } else {
-          console.log("all good");
           setLoginStatus(response.data[0].email);
           navigate("/users");
         }
-        console.log(response.data);
       }
     );
   };
 
   useEffect(() => {
-    console.log("I am in useEffect const");
-
     Axios.get("/login").then((response) => {
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.email[0].username);
