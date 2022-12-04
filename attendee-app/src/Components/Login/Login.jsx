@@ -1,47 +1,42 @@
 import "./login.css";
-import { useState } from "react";
-import { useForm } from "../Hooks/useForm";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { AdditionalContentExample, Spinner } from "./Alert"
 
-export function Login(
-    // { handleChange, values, errors, handleSubmit, 
-    // isSubmitting}
-    ) {
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState ("");
-        const [loginStatus, setLoginStatus] = useState("");
+export function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState("");
+  const navigate = useNavigate();
 
-const onChange = (e) => {
-    e.preventDefault()
-    axios.post('/login', { email: email, password: password })
-    .then(( res )=> {
-        if(res.data.message) {
-            console.log('sth wrong')
-            setLoginStatus(res.data.message);
+  const Login = (e) => {
+    e.preventDefault();
+    console.log("I am in Login const");
+    Axios.post("/login", { email: email, password: password }).then(
+      (response) => {
+        if (response.data.message) {
+          console.log("sth wrong");
+          setLoginStatus(response.data.message);
         } else {
-            console.log('all good')
-            setLoginStatus (res.data.email);
+          console.log("all good");
+          setLoginStatus(response.data[0].email);
+          navigate("/users");
         }
-//  console.log(res.data)
-    })
-}
+        console.log(response.data);
+      }
+    );
+  };
 
-    
-    
-//       const Logout = () => {
-//         console.log('Logout')
-//         setUser({email: ''})
-//       }
-      
-//     const formLogin = (e) => {
+  useEffect(() => {
+    console.log("I am in useEffect const");
 
-//     // console.log("Callback function when form is submitted!");
-//     // console.log("Form Values ", values);
-//     e.preventDefault();
-//     Loginn(details)
-//   };
-
-//   console.log(values);
+    Axios.get("/login").then((response) => {
+      if (response.data.loggedIn === true) {
+        setLoginStatus(response.data.email[0].username);
+      }
+    });
+  }, []);
 
   return (
     <div className="wrapper">
@@ -67,77 +62,47 @@ const onChange = (e) => {
                       <div className="center-wrap">
                         <div className="section text-center">
                           <h4 className="mb-4 pb-3">Log In</h4>
-                          <form onSubmit={onChange}>
+                          <form onSubmit={Login}>
                             <div className="form-group">
                               <input
-                            //   value={details.email}
                                 type="email"
                                 name="email"
                                 className="form-style"
                                 placeholder="Email"
                                 id="logemail"
-                                onChange={
-                                    (e) => setEmail(e.target.value
-                                    )}
-
-                                // }
-                                // rules={[
-                                //     {
-                                //         required: true,
-                                //         message: "Please enter a valid email address"
-                                //     }
-                                // ]}
+                                onChange={(e) => setEmail(e.target.value)}
                               />
                               <i className="input-icon uil uil-at"></i>
                             </div>
                             <div className="form-group mt-2">
                               <input
-                            //   value={details.password}
                                 type="password"
                                 name="password"
                                 className="form-style"
                                 placeholder="Password"
                                 id="password"
-                                onChange = { (e) => {
-                                    setPassword (e.target.value);
-                                 }}
+                                onChange={(e) => {
+                                  setPassword(e.target.value);
+                                }}
                                 minLength="5"
-                                // rules={[
-                                //     {
-                                //         required: true,
-                                //         message: "Please enter your password"
-                                //     }
-                                // ]}
                               />
                               <i className="input-icon uil uil-lock-alt"></i>
                             </div>
-                            {/* <div> */}
-                              {/* {!isSubmitting && ( */}
-                                <button
-                                  type="submit"
-                                  value="Submit"
-                                  className="btn mt-4"
-                                  onClick={onChange}
 
-                                  //   onSubmit={handleSubmit}
-                                >
-                                  SUBMIT
-                                </button>
-                                <h5 className="pt-2"> {loginStatus}</h5>
+                            <button
+                              type="submit"
+                              value="Submit"
+                              className="btn mt-4"
+                              onClick={Login}
+                            >
+                              SUBMIT
+                            </button>
+                            <h5 className="pt-2"> 
+                            {loginStatus}
+                            
+                            </h5>
+                            {/* <Spinner/> */}
 
-                          {/* )}{" "} */}
-
-                            {/* {isSubmitting && ( */}
-                            {/* //     <div className="d-flex justify-content-center my-3">
-                            //       <div */}
-                            {/* //         className="spinner-border text-secondary "
-                            //         role="status"
-                            //       >
-                            //         <span className="sr-only"></span>
-                            //       </div>
-                            //     </div>
-                            //   )}
-                            // </div> */}
                           </form>
 
                           <p className="mb-0 mt-4 text-center">
@@ -152,7 +117,7 @@ const onChange = (e) => {
                       <div className="center-wrap">
                         <div className="section text-center">
                           <h4 className="mb-4 pb-3">Sign Up</h4>
-                          <form >
+                          <form>
                             <div className="form-group">
                               <input
                                 type="text"
@@ -160,7 +125,6 @@ const onChange = (e) => {
                                 className="form-style"
                                 placeholder="Full Name"
                                 id="logname"
-                                // onChange={handleChange}
                                 minLength="5"
                               />
                               <i className="input-icon uil uil-user"></i>
@@ -172,7 +136,6 @@ const onChange = (e) => {
                                 className="form-style"
                                 placeholder="Email"
                                 id="loginemail"
-                                // onChange={handleChange}
                               />
                               <i className="input-icon uil uil-at"></i>
                             </div>
@@ -183,17 +146,14 @@ const onChange = (e) => {
                                 className="form-style"
                                 placeholder="Password"
                                 id="loginpassword"
-                                // onChange={handleChange}
                                 minLength="5"
                               />
                               <i className="input-icon uil uil-lock-alt"></i>
                             </div>
                             <button
-                            // onClick={login}
                               type="submit"
                               value="Submit"
                               className="btn mt-4"
-                              //   onSubmit={handleSubmit}
                             >
                               SUBMIT
                             </button>
@@ -205,7 +165,18 @@ const onChange = (e) => {
                 </div>
               </div>
             </div>
-            <button className="btn mb-5">Check demo version</button>
+            <button
+              className="btn mb-5"
+              onClick={() =>
+                alert(
+                  "TRY TO ENTER: admin@admin.com (Email) && admin123 (password)"
+                )
+              }
+            
+              Check demo version
+            // (<AdditionalContentExample/>)}
+            >
+            </button>
           </div>
         </div>
       </div>

@@ -7,8 +7,19 @@ const fs = require("fs");
 const db = require("./db.js");
 const loginDb = require("./loginDb.js");
 
+const session = require("express-session");
+
 app.use(express.json());
 app.use(cors());
+
+app.use(
+  session({
+    key: "userId",
+    secret: "subscribe",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 app.get("/users", (req, res, next) => {
   const sql = "select * from users";
@@ -43,6 +54,14 @@ app.post("/login", (req, res) => {
       }
     }
   );
+});
+
+app.get("/login", (req, res) => {
+  if (req.session.email) {
+    res.send({ loggedIn: true, email: req.session.email });
+  } else {
+    res.send({ loggedIn: false });
+  }
 });
 
 app.post("/users", (req, res, next) => {
@@ -86,7 +105,6 @@ app.patch("/users/", (req, res, next) => {
       }
       console.log(result);
       res.status(200).json({ updatedID: this.changes });
-      // res.json(result)
     }
   );
 });

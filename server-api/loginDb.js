@@ -1,4 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
+
 const DB = "loginDb.sqlite";
 
 let loginDb = new sqlite3.Database(DB, (err) => {
@@ -16,7 +17,7 @@ let loginDb = new sqlite3.Database(DB, (err) => {
           console.log("Table already exists.");
         } else {
           const insert = "INSERT INTO login (email, password) VALUES (?,?)";
-          loginDb.run(insert, ["admin@admin.com", "admin123"]);
+          loginDb.run(insert, ["admin@admin.com", "admin"]);
         }
       }
     );
