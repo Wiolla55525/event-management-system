@@ -1,4 +1,18 @@
-#This app includes:
+🏁 In order to start this app you need to :
+
+# In event-management-system folder 
+1. Go to server-api
+2. Npm install
+3. Npm start
+3. Go to attendee-app
+3. Npm install
+4. Npm start
+5. In order to log in, press Demo Version Button and follow instructions 🤩
+
+Enjoy Your Exploring :)
+P.S. Don't forget to add, delete or change some attendees data 🤭
+#
+🌟 This app includes: 
 #
 ☑ Login page: 
 ![Screenshot (10)](https://user-images.githubusercontent.com/105384019/205508366-a19144f4-769f-4cc4-89a0-8ea5c6af3507.png)
